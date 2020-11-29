@@ -8,7 +8,7 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
-  Keyboard
+  Keyboard,
 } from 'react-native';
 
 const ModalCustom = (props) => {
@@ -28,16 +28,22 @@ const ModalCustom = (props) => {
                 Keyboard.dismiss();
               }}>
               <View style={styles.modalView}>
-                <Text style={styles.modalText}>Create new App Label</Text>
-                <View style={styles.form}>
-                  {props.children}
-                </View>
+                <Text style={styles.modalText}>{props.title}</Text>
+                <View style={styles.form}>{props.children}</View>
                 <View style={styles.btnContainer}>
-                  <TouchableHighlight
-                    style={{...styles.openButton, backgroundColor: '#2196F3'}}
-                    onPress={props.createPress}>
-                    <Text style={styles.textStyle}>Create</Text>
-                  </TouchableHighlight>
+                  {props.mode === 'confirm' ? (
+                    <TouchableHighlight
+                      style={{...styles.openButton, backgroundColor: '#2196F3'}}
+                      onPress={props.confirmHandler}>
+                      <Text style={styles.textStyle}>Confirm</Text>
+                    </TouchableHighlight>
+                  ) : (
+                    <TouchableHighlight
+                      style={{...styles.openButton, backgroundColor: '#2196F3'}}
+                      onPress={props.createPress}>
+                      <Text style={styles.textStyle}>{props.title}</Text>
+                    </TouchableHighlight>
+                  )}
                   <TouchableHighlight
                     style={{...styles.openButton}}
                     onPress={props.closePress}>
@@ -57,8 +63,8 @@ const styles = StyleSheet.create({
   modalText: {
     fontSize: 18,
     textAlign: 'center',
-    marginBottom: 20
-  },  
+    marginBottom: 20,
+  },
   centeredView: {
     width: '100%',
     flex: 1,
@@ -92,10 +98,10 @@ const styles = StyleSheet.create({
     padding: 5,
     elevation: 2,
     width: 100,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   form: {
     width: '100%',
   },
-})
+});
 export default ModalCustom;

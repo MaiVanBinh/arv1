@@ -9,78 +9,99 @@
 9        android:targetSdkVersion="29" />
 10
 11    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-11-->D:\Code\AwesomeProject\android\app\src\debug\AndroidManifest.xml:5:5-77
-11-->D:\Code\AwesomeProject\android\app\src\debug\AndroidManifest.xml:5:22-75
+11-->D:\Code\final-android\android-project\android\app\src\debug\AndroidManifest.xml:5:5-77
+11-->D:\Code\final-android\android-project\android\app\src\debug\AndroidManifest.xml:5:22-75
 12    <uses-permission android:name="android.permission.INTERNET" />
-12-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:4:5-67
-12-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:4:22-64
-13    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-13-->[com.facebook.flipper:flipper:0.54.0] C:\Users\mai\.gradle\caches\transforms-2\files-2.1\1c7787ec82631e0394972c76bdabe608\flipper-0.54.0\AndroidManifest.xml:16:5-76
-13-->[com.facebook.flipper:flipper:0.54.0] C:\Users\mai\.gradle\caches\transforms-2\files-2.1\1c7787ec82631e0394972c76bdabe608\flipper-0.54.0\AndroidManifest.xml:16:22-73
-14
-15    <application
-15-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:6:5-25:19
-16        android:name="com.awesomeproject.MainApplication"
-16-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:7:7-38
-17        android:allowBackup="false"
-17-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:11:7-34
-18        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-18-->[androidx.core:core:1.1.0] C:\Users\mai\.gradle\caches\transforms-2\files-2.1\639e914bfc1efa21e36199d3ff2c5eef\core-1.1.0\AndroidManifest.xml:24:18-86
-19        android:debuggable="true"
-20        android:icon="@mipmap/ic_launcher"
-20-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:9:7-41
-21        android:label="@string/app_name"
-21-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:8:7-39
-22        android:roundIcon="@mipmap/ic_launcher_round"
-22-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:10:7-52
-23        android:theme="@style/AppTheme"
-23-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:12:7-38
-24        android:usesCleartextTraffic="true" >
-24-->D:\Code\AwesomeProject\android\app\src\debug\AndroidManifest.xml:7:18-53
-25        <activity
-25-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:13:7-23:18
-26            android:name="com.awesomeproject.MainActivity"
-26-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:14:9-37
-27            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
-27-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:16:9-86
-28            android:label="@string/app_name"
-28-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:15:9-41
-29            android:launchMode="singleTask"
-29-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:17:9-40
-30            android:windowSoftInputMode="adjustResize" >
-30-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:18:9-51
-31            <intent-filter>
-31-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:19:9-22:25
-32                <action android:name="android.intent.action.MAIN" />
-32-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:20:13-65
-32-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:20:21-62
-33
-34                <category android:name="android.intent.category.LAUNCHER" />
-34-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:21:13-73
-34-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:21:23-70
-35            </intent-filter>
-36        </activity>
-37        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-37-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:24:7-84
-37-->D:\Code\AwesomeProject\android\app\src\main\AndroidManifest.xml:24:17-81
-38
-39        <provider
-39-->[:react-native-webview] D:\Code\AwesomeProject\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:12:9-20:20
-40            android:name="com.reactnativecommunity.webview.RNCWebViewFileProvider"
-40-->[:react-native-webview] D:\Code\AwesomeProject\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:13:13-83
-41            android:authorities="com.awesomeproject.fileprovider"
-41-->[:react-native-webview] D:\Code\AwesomeProject\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-64
-42            android:exported="false"
-42-->[:react-native-webview] D:\Code\AwesomeProject\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:15:13-37
-43            android:grantUriPermissions="true" >
-43-->[:react-native-webview] D:\Code\AwesomeProject\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:16:13-47
-44            <meta-data
-44-->[:react-native-webview] D:\Code\AwesomeProject\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:17:13-19:63
-45                android:name="android.support.FILE_PROVIDER_PATHS"
-45-->[:react-native-webview] D:\Code\AwesomeProject\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:18:17-67
-46                android:resource="@xml/file_provider_paths" />
-46-->[:react-native-webview] D:\Code\AwesomeProject\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:19:17-60
-47        </provider>
-48    </application>
-49
-50</manifest>
+12-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:4:5-67
+12-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:4:22-64
+13    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+13-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:5:5-74
+13-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:5:22-71
+14    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+14-->[com.facebook.flipper:flipper:0.54.0] C:\Users\mai\.gradle\caches\transforms-2\files-2.1\1c7787ec82631e0394972c76bdabe608\flipper-0.54.0\AndroidManifest.xml:16:5-76
+14-->[com.facebook.flipper:flipper:0.54.0] C:\Users\mai\.gradle\caches\transforms-2\files-2.1\1c7787ec82631e0394972c76bdabe608\flipper-0.54.0\AndroidManifest.xml:16:22-73
+15    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+15-->[:react-native-fingerprint-scanner] D:\Code\final-android\android-project\node_modules\react-native-fingerprint-scanner\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:12:5-72
+15-->[:react-native-fingerprint-scanner] D:\Code\final-android\android-project\node_modules\react-native-fingerprint-scanner\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:12:22-69
+16    <uses-permission android:name="com.fingerprints.service.ACCESS_FINGERPRINT_MANAGER" />
+16-->[:react-native-fingerprint-scanner] D:\Code\final-android\android-project\node_modules\react-native-fingerprint-scanner\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:13:5-91
+16-->[:react-native-fingerprint-scanner] D:\Code\final-android\android-project\node_modules\react-native-fingerprint-scanner\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:13:22-88
+17    <uses-permission android:name="com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY" />
+17-->[:react-native-fingerprint-scanner] D:\Code\final-android\android-project\node_modules\react-native-fingerprint-scanner\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:14:5-117
+17-->[:react-native-fingerprint-scanner] D:\Code\final-android\android-project\node_modules\react-native-fingerprint-scanner\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:14:22-114
+18
+19    <application
+19-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:7:5-26:19
+20        android:name="com.awesomeproject.MainApplication"
+20-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:8:7-38
+21        android:allowBackup="false"
+21-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:12:7-34
+22        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+22-->[androidx.core:core:1.1.0] C:\Users\mai\.gradle\caches\transforms-2\files-2.1\639e914bfc1efa21e36199d3ff2c5eef\core-1.1.0\AndroidManifest.xml:24:18-86
+23        android:debuggable="true"
+24        android:icon="@mipmap/ic_launcher"
+24-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:10:7-41
+25        android:label="@string/app_name"
+25-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:9:7-39
+26        android:roundIcon="@mipmap/ic_launcher_round"
+26-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:11:7-52
+27        android:theme="@style/AppTheme"
+27-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:13:7-38
+28        android:usesCleartextTraffic="true" >
+28-->D:\Code\final-android\android-project\android\app\src\debug\AndroidManifest.xml:7:18-53
+29        <activity
+29-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:14:7-24:18
+30            android:name="com.awesomeproject.MainActivity"
+30-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:15:9-37
+31            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
+31-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:17:9-86
+32            android:label="@string/app_name"
+32-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:16:9-41
+33            android:launchMode="singleTask"
+33-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:18:9-40
+34            android:windowSoftInputMode="adjustResize" >
+34-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:19:9-51
+35            <intent-filter>
+35-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:20:9-23:25
+36                <action android:name="android.intent.action.MAIN" />
+36-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:21:13-65
+36-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:21:21-62
+37
+38                <category android:name="android.intent.category.LAUNCHER" />
+38-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:22:13-73
+38-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:22:23-70
+39            </intent-filter>
+40        </activity>
+41        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+41-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:25:7-84
+41-->D:\Code\final-android\android-project\android\app\src\main\AndroidManifest.xml:25:17-81
+42
+43        <provider
+43-->[:react-native-webview] D:\Code\final-android\android-project\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:12:9-20:20
+44            android:name="com.reactnativecommunity.webview.RNCWebViewFileProvider"
+44-->[:react-native-webview] D:\Code\final-android\android-project\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:13:13-83
+45            android:authorities="com.awesomeproject.fileprovider"
+45-->[:react-native-webview] D:\Code\final-android\android-project\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-64
+46            android:exported="false"
+46-->[:react-native-webview] D:\Code\final-android\android-project\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:15:13-37
+47            android:grantUriPermissions="true" >
+47-->[:react-native-webview] D:\Code\final-android\android-project\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:16:13-47
+48            <meta-data
+48-->[:react-native-webview] D:\Code\final-android\android-project\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:17:13-19:63
+49                android:name="android.support.FILE_PROVIDER_PATHS"
+49-->[:react-native-webview] D:\Code\final-android\android-project\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:18:17-67
+50                android:resource="@xml/file_provider_paths" />
+50-->[:react-native-webview] D:\Code\final-android\android-project\node_modules\react-native-webview\android\build\intermediates\library_manifest\debug\AndroidManifest.xml:19:17-60
+51        </provider>
+52
+53        <activity
+53-->[androidx.biometric:biometric:1.0.1] C:\Users\mai\.gradle\caches\transforms-2\files-2.1\6ec249d8ca5f46e13b5e5f400316b4ee\biometric-1.0.1\AndroidManifest.xml:28:9-31:67
+54            android:name="androidx.biometric.DeviceCredentialHandlerActivity"
+54-->[androidx.biometric:biometric:1.0.1] C:\Users\mai\.gradle\caches\transforms-2\files-2.1\6ec249d8ca5f46e13b5e5f400316b4ee\biometric-1.0.1\AndroidManifest.xml:29:13-78
+55            android:exported="true"
+55-->[androidx.biometric:biometric:1.0.1] C:\Users\mai\.gradle\caches\transforms-2\files-2.1\6ec249d8ca5f46e13b5e5f400316b4ee\biometric-1.0.1\AndroidManifest.xml:30:13-36
+56            android:theme="@style/DeviceCredentialHandlerTheme" />
+56-->[androidx.biometric:biometric:1.0.1] C:\Users\mai\.gradle\caches\transforms-2\files-2.1\6ec249d8ca5f46e13b5e5f400316b4ee\biometric-1.0.1\AndroidManifest.xml:31:13-64
+57    </application>
+58
+59</manifest>

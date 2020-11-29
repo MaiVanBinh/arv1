@@ -1,15 +1,21 @@
-import React, {useState, useLayoutEffect, useEffect} from 'react';
-import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import AppCateItem from '../components/AppCateItem';
-import {AppCategori} from '../data';
-import ModalCustom from '../components/UI/ModalCustom';
+import React, {useState, useLayoutEffect, useEffect, useCallback} from 'react';
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  TouchableOpacity,
+  Button,
+} from 'react-native';
 import {Sae} from 'react-native-textinput-effects';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {connect, useSelector} from 'react-redux';
+import ModalCustom from '../components/UI/ModalCustom';
 import Empty from '../components/UI/Empty';
+import * as actions from '../store/actions/data';
+import Item from '../components/AppCateItem1';
 
-const AppCategories = ({navigation}) => {
+const AppCategories = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [appItems, setAppItems] = useState(null);
   const [formInput, setFormInput] = useState({
     appLabel: {
       title: 'Tên ứng dụng',
@@ -20,32 +26,53 @@ const AppCategories = ({navigation}) => {
       value: '',
     },
   });
-  const renderItem = ({item}) => {
-    return <AppCateItem name={item.name} iconName={item.icon} onViewListAcc={() => navigation.navigate('accounts', {
-      title: item.name
-    })}/>;
+  const [isRefeshing, setIsRefeshing] = useState(false)
+  const [updateId, setUpdateId] = useState(null);
+  useEffect(() => {
+    props.onLoadApps();
+  }, [props.onLoadApps]);
+
+  const getListAcouunt = (item) => {
+    props.navigation.navigate('accounts', {
+      title: item.name,
+      id: item.id
+    });
   };
-  useEffect(() => {
-    if (AppCategori) {
-      setAppItems(AppCategori);
-    }
-  }, [AppCategori]);
-  useEffect(() => {
-    console.log(appItems);
-  }, []);
+
+  const onUpdateAppHandler = (app) => {
+    setUpdateId(app.id)
+    setModalVisible(true);
+    setFormInput({
+      appLabel: {
+        title: 'Tên ứng dụng',
+        value: app.name,
+      },
+      iconValue: {
+        title: 'Tên icon',
+        value: app.icon,
+      },
+    });
+  };
+
+  const renderItem = ({item}) => {
+    return (
+      <Item name={item.name} icon={item.icon} id={item.id} onUpdateHandler={() => onUpdateAppHandler(item)} onPressHandler={() => getListAcouunt(item)}/>
+    );
+  };
+
   useLayoutEffect(() => {
-    navigation.setOptions({
+    props.navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
-          style={{backgroundColor: '#16a596', marginRight: 10}}
+          style={{backgroundColor: '#C69F89', marginRight: 10}}
           onPress={() => setModalVisible(true)}>
           <Icon name="plus" size={30} color="white" />
         </TouchableOpacity>
       ),
     });
-  }, [navigation]);
-  
-  const resetFormInput = (props) => {
+  }, [props.navigation]);
+
+  const resetFormInput = useCallback(() => {
     setFormInput({
       appLabel: {
         title: 'Tên ứng dụng',
@@ -55,28 +82,50 @@ const AppCategories = ({navigation}) => {
         title: 'Tên icon',
         value: '',
       },
-    })
-  }
+    });
+  }, []);
 
   const modalClose = () => {
+    setUpdateId(null);
     setModalVisible(false);
     resetFormInput();
   };
 
-  const onCreateAppHandler = () => {
-    console.log(formInput.appLabel.value, formInput.iconValue.value);
-    const appItemsUpdate = [...appItems];
-    appItemsUpdate.push({name: formInput.appLabel.value, icon: formInput.iconValue.value});
-    setAppItems(appItemsUpdate);
-    setModalVisible(false);
-    resetFormInput();
-  }
+  const onChangeAppHandler = async () => {
+    if (Icon.hasIcon(formInput.iconValue.value)) {
+      let id = null;
+      let mode = null;
+      if(updateId) {
+        mode = 'u';
+        id = updateId;
+      } else {
+        if(props.apps && props.apps.length > 0) {
+          id = props.apps[props.apps.length - 1].id + 1;
+        } else {
+          id = 1;
+        }
+        mode = 'c'
+      }
+      props.onChangeApp(
+        id,
+        formInput.appLabel.value,
+        formInput.iconValue.value,
+        mode,
+      );
+      setUpdateId(null);
+      setModalVisible(false);
+      setIsRefeshing(false);
+      resetFormInput();
+    } else {
+      alert('Not have icon');
+    }
+  };
 
   const onChangeInputHandler = (text, type) => {
     const formInputUpdate = JSON.parse(JSON.stringify(formInput));
     formInputUpdate[type].value = text;
     setFormInput(formInputUpdate);
-  }
+  };
 
   let inputContent = [];
   for (const property in formInput) {
@@ -94,26 +143,36 @@ const AppCategories = ({navigation}) => {
         autoCapitalize={'none'}
         autoCorrect={false}
         value={formInput[property].value}
-        onChangeText={(text) => onChangeInputHandler(text, property) }
+        onChangeText={(text) => onChangeInputHandler(text, property)}
       />,
     );
   }
+  useEffect(() => {
+    setIsRefeshing(true)
+  }, [props.apps, modalVisible]);
 
   return (
     <View style={styles.centeredView}>
-      {/* {modalVisible ? <View style={styles.blackBG} onPress=></View> : null} */}
-      <ModalCustom visible={modalVisible} closePress={modalClose} createPress={onCreateAppHandler}>
+      <ModalCustom
+        visible={modalVisible}
+        closePress={modalClose}
+        createPress={onChangeAppHandler}
+        title={updateId ? "Update" : "Create"}>
         {inputContent}
       </ModalCustom>
-      {appItems && appItems.length > 0 ? (
-        <FlatList
-          data={appItems}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      ) : (
-        <Empty>You don't have any App. Let create one</Empty>
-      )}
+      <View style={styles.container}>
+        {props.apps && props.apps.length > 0 ? (
+          <FlatList
+            refreshing={isRefeshing}
+            numColumns={2}
+            data={props.apps}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        ) : (
+          <Empty>You don't have any App. Let create one</Empty>
+        )}
+      </View>
     </View>
   );
 };
@@ -124,16 +183,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#eee'
+  },
+  container: {
+    flex: 1,
+    flexDirection: 'row',
   },
   textStyle: {
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
-  },
-  blackBG: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#ccc',
   },
   inputCustom: {
     width: '100%',
@@ -144,4 +203,18 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppCategories;
+const mapStateToProps = (state) => {
+  return {
+    apps: state.data.apps,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onLoadApps: () => dispatch(actions.loadApp()), 
+    onChangeApp: (id, name, icon, mode) =>
+      dispatch(actions.onChangeApp(id,name, icon, mode)),
+    onDeleteAppCate: (name) => dispatch(actions.deleteAppCate(name)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppCategories);
