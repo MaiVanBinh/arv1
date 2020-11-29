@@ -9,6 +9,7 @@ import Account from '../screens/ListAccount';
 import StartScreen from '../screens/StartScreen';
 import AsyncStorage from '@react-native-community/async-storage';
 import {setData} from '../store/actions/data';
+import QRCode from '../screens/QRCode';
 
 const AppStackNavigator = createStackNavigator();
 
@@ -33,6 +34,16 @@ const AppStackNavigation = (props) => {
             component={Account}
             options={{
               headerTitle: 'Accounts',
+              headerStyle: {
+                backgroundColor: '#C69F89',
+              },
+            }}
+          />
+          <AppStackNavigator.Screen
+            name="share"
+            component={QRCode}
+            options={{
+              headerTitle: 'share',
               headerStyle: {
                 backgroundColor: '#C69F89',
               },

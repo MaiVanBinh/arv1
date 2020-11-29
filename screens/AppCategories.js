@@ -63,11 +63,18 @@ const AppCategories = (props) => {
   useLayoutEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity
-          style={{backgroundColor: '#C69F89', marginRight: 10}}
-          onPress={() => setModalVisible(true)}>
-          <Icon name="plus" size={30} color="white" />
-        </TouchableOpacity>
+        <View style={{flexDirection: 'row'}}>
+          <TouchableOpacity
+            style={{backgroundColor: '#C69F89', marginRight: 10, borderColor: 'white', borderWidth: 1, padding: 2}}
+            onPress={() => props.navigation.navigate('share')}>
+            <Icon name="share" size={25} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{backgroundColor: '#C69F89', marginRight: 10, borderColor: 'white', borderWidth: 1, padding: 2}}
+            onPress={() => setModalVisible(true)}>
+            <Icon name="plus" size={30} color="white" />
+          </TouchableOpacity>
+        </View>
       ),
     });
   }, [props.navigation]);
