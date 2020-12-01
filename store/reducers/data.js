@@ -26,6 +26,10 @@ const updateAppSuccess = (state, action) => {
     return updateObject(state, {apps: action.updateApps});
 }
 
+const dongboApps = (state, action) => {
+    return updateAppSuccess(state, {apps: action.apps});
+}
+
 const dataReducer = (state = initState, action) => {
     switch(action.type){
         case actionsType.LOAD_APPS_START: return loadAppsStart(state, action);
@@ -34,6 +38,7 @@ const dataReducer = (state = initState, action) => {
         case actionsType.CREATE_APP_CATE: return createApp(state, action);
         case actionsType.DELETE_APP_CATE: return deleteAppSuccess(state, action);
         case actionsType.UPDATE_APP_CATE: return updateAppSuccess(state, action);
+        case actionsType.DONG_BO_APPS: return dongboApps(state, action);
         default: return state;
     }
 }

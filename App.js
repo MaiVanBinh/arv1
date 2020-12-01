@@ -8,10 +8,14 @@ import ReduxThunk from 'redux-thunk';
 import AppStackNavigation from './navigations/AppStackNavigation';
 import dataReducers from './store/reducers/data';
 import accountsReducer  from './store/reducers/account';
+import dongboReducer from './store/reducers/dongbo';
+import authReducer from './store/reducers/auth';
 
 const rootReducer = combineReducers({
   data: dataReducers,
-  accounts: accountsReducer
+  accounts: accountsReducer,
+  dongbo: dongboReducer,
+  auth: authReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

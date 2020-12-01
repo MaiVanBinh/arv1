@@ -1,6 +1,6 @@
 export const encrypt = (message, key) => {
   var CryptoJS = require('crypto-js');
-  var ciphertext = CryptoJS.AES.encrypt(message, 'secret key 123').toString();
+  var ciphertext = CryptoJS.AES.encrypt(message, key).toString();
   return ciphertext;
 };
 

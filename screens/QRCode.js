@@ -1,13 +1,70 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text, Button, ActivityIndicator} from 'react-native';
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  Button,
+  ActivityIndicator,
+  Linking,
+  TouchableOpacity,
+} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
-
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import {RNCamera} from 'react-native-camera';
+import asyncStorage from '@react-native-community/async-storage';
+import { useIsFocused } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 const QRCodeRender = (props) => {
+
   const [isReady, setIsReady] = useState(false);
   const [isShare, setIsShare] = useState(false);
   const [token, setToken] = useState(null);
   const [postStart, setPostStart] = useState(false);
   const [timeOut, setTimeout] = useState(10);
+  const [isGetData, setIsGetData] = useState(false);
+  const isFocused = useIsFocused();
+  const [isTransSuccess, setIsTS] = useState(true);
+
+  useEffect(() => {
+    setIsTS(false);
+    refreshScreen();
+  },[isFocused]);
+
+  const refreshScreen = () => {
+    setIsReady(false);
+    setIsShare(false);
+    setToken(null);
+    setPostStart(false);
+    setTimeout(10);
+    setIsGetData(false)
+  }
+  const onSuccess = (e) => {
+    fetch(e.data, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(async data => {
+        const dataUpdate = [...data.message.apps.map(item => ({
+          id: item.id,
+          name: item.name,
+          icon: item.icon
+        }))];
+        console.log(data.message.accs, 'accs')
+        console.log(Array.isArray(dataUpdate), 'dataUpdate');
+        console.log(Array.isArray(data.message.accs), 'accs');
+        // const dataUpdate = JSON.parse(data);
+        // console.log(data.message.message.apps);
+        await asyncStorage.setItem('applications', JSON.stringify(dataUpdate));
+        await asyncStorage.setItem('accounts', JSON.stringify(data.message.accs));
+        refreshScreen();
+        setIsTS(true);
+      })
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     if (isReady && isShare && timeOut > 0) {
@@ -18,70 +75,89 @@ const QRCodeRender = (props) => {
       return () => clearInterval(timer);
     }
     if (timeOut === 0) {
-      console.log('out')
       setIsReady(false);
       setIsShare(false);
     }
-  }, [timeOut]);
+  }, [timeOut, isReady, isShare]);
+
   const renderQrCode = () => {
     const tokenUpdate = parseInt(Math.random().toFixed(10) * 10 ** 10);
     setToken(tokenUpdate);
     setPostStart(true);
     setIsShare(true);
+    setTimeout(10);
+    setIsGetData(false);
   };
   useEffect(() => {
-    if (postStart) {
-      fetch('https://androidfinal.herokuapp.com/data', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({message: {name: props.apps, token: token}}),
+      asyncStorage.getItem('accounts').then(accs => {
+        console.log(typeof(accs));
+        if (postStart) {
+          fetch('https://androidfinal.herokuapp.com/data', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({message: {apps: props.apps, accs: JSON.parse(accs), token: token}}),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              setPostStart(false);
+              setIsReady(true);
+            })
+            .catch((err) => console.log(err));
+        }
       })
-        .then((res) => res.json())
-        .then((data) => {
-          setPostStart(false);
-          setIsReady(true);
-          setTimeout(10);
-        })
-        .catch((err) => console.log(err));
-    }
+      .catch(err => console.log(err));
+    
   }, [postStart]);
 
-  // useEffect(() => {
-  //   if (isReady) {
-  //     fetch('https://androidfinal.herokuapp.com/data/1')
-  //       .then((res) => res.json())
-  //       .then((data) => console.log(data.message.message.name))
-  //       .catch((err) => console.log(err));
-  //   }
-  // }, [isReady]);
+  const getDataHandler = () => {
+    setIsShare(false);
+    setIsGetData(true);
+  };
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.btnGroup}>
         <View style={{marginRight: 5}}>
           <Button title="Render qrcode" onPress={renderQrCode} />
         </View>
         <View>
-          <Button title="Scaner qrcode" />
+          <Button title="Scaner qrcode" onPress={getDataHandler} />
         </View>
       </View>
-      {isReady && isShare ? <Text>{timeOut}</Text> : null}
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+      {isReady && isShare ? (
+        <Text style={styles.timeOut}>Remaining time: {timeOut}</Text>
+      ) : null}
       {postStart ? <ActivityIndicator size="large" color="#00ff00" /> : null}
       {isReady && isShare ? (
         <QRCode
-          value={`https://androidfinal.herokuapp.com/data/${token}`}
+          value={`https://androidfinal.herokuapp.com/data/8`}
           size={200}
         />
       ) : null}
-    </View>
+      </View>
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+      {isTransSuccess ? <Icon name="check-circle" size={100} color="green"/> : null}
+      </View>
+     
+      {isGetData ? (
+        <View style={styles.qrcode}>
+          <QRCodeScanner
+            onRead={onSuccess}
+          />
+        </View>
+      ) : null}
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
   btnGroup: {
     margin: 10,
@@ -89,6 +165,30 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  centerText: {
+    flex: 1,
+    fontSize: 18,
+    padding: 32,
+    color: '#777',
+  },
+  textBold: {
+    fontWeight: '500',
+    color: '#000',
+  },
+  buttonText: {
+    fontSize: 21,
+    color: 'rgb(0,122,255)',
+  },
+  buttonTouchable: {
+    padding: 16,
+  },
+  timeOut: {
+    fontSize: 20,
+    marginBottom: 10,
+  },
+  qrcode: {
+    marginTop: 100
+  }
 });
 import {connect} from 'react-redux';
 const mapStateToProps = (state) => {
@@ -96,4 +196,14 @@ const mapStateToProps = (state) => {
     apps: state.data.apps,
   };
 };
-export default connect(mapStateToProps)(QRCodeRender);
+import * as actions from '../store/actions/dongbo';
+import { loadApp } from '../store/actions/data';
+import { set } from 'react-native-reanimated';
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSaveData: (data) => dispatch(actions.dongbo(data)),
+    ondongboApps: () => dispatch(loadApp())
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(QRCodeRender);

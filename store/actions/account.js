@@ -56,22 +56,22 @@ const createAccountFail = (errMessage) => {
   };
 };
 
-export const createAccount = (id, username, password, app) => {
+export const createAccount = (id, username, password, key, app) => {
   return async (dispatch) => {
     dispatch(createAccountStart());
     try {
       const accounts = await AsyncStorage.getItem('accounts');
       const updateAcc = JSON.parse(accounts);
-      const passwordUpdate = encrypt(password);
+      const passwordUpdate = encrypt(password, key);
       updateAcc.push({
         id: id,
         username: username,
         password: passwordUpdate,
         app: app,
       });
-      
+
       await AsyncStorage.setItem('accounts', JSON.stringify(updateAcc));
-      const accs = updateAcc.filter(item => item.app === app)
+      const accs = updateAcc.filter((item) => item.app === app);
       return dispatch(createAccountSuccess(accs));
     } catch (err) {
       // return dispatch(createAccountFail(err.message));
@@ -96,7 +96,7 @@ export const deleteAcc = (id) => {
   };
 };
 
-export const updateAccount = (id, username, password, app) => {
+export const updateAccount = (id, username, password, key, app) => {
   return async (dispatch) => {
     dispatch({
       type: actionsType.LOAD_ACCOUNT_START,
@@ -104,22 +104,24 @@ export const updateAccount = (id, username, password, app) => {
     try {
       const accs = JSON.parse(await AsyncStorage.getItem('accounts'));
       const index = accs.findIndex((item) => item.id === id);
-      accs[index] = {
-        id: id,
-        username: username,
-        password: password,
-        app: app,
-      };
-      await AsyncStorage.setItem('accounts', JSON.stringify(accs));
-      return dispatch({
-        type: actionsType.UPDATE_ACCOUNT_SUCCESS,
-        newAccount: {
+      if (index >= 0) {
+        accs[index] = {
           id: id,
           username: username,
           password: password,
           app: app,
-        },
-      });
+        };
+        await AsyncStorage.setItem('accounts', JSON.stringify(accs));
+        return dispatch({
+          type: actionsType.UPDATE_ACCOUNT_SUCCESS,
+          newAccount: {
+            id: id,
+            username: username,
+            password: password,
+            app: app,
+          },
+        });
+      }
     } catch (err) {
       console.log(err);
     }

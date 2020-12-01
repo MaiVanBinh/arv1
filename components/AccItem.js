@@ -1,21 +1,20 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Button} from 'react-native-elements';
 
 const AccItem = (props) => {
   return (
     <TouchableOpacity style={styles.appitem} onPress={props.onPressHandler}>
       <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
-      {/* <Icon name={props.iconName} size={15} style={{width: 30, height: 30, color: ''}} /> */}
       <Text style={styles.text}>{props.username}</Text>
       </View>
       <View style={styles.handlerIcon}>
-        <Button
+        {/* <Button
           icon={<Icon name="edit" size={15} color="white" />}
           buttonStyle={{marginLeft: 5}}
           onPress={() => props.onUpdateHandle(props.id, props.username, props.password)}
-        />
+        /> */}
         <Button
           icon={<Icon name="trash" size={15} color="white" />}
           buttonStyle={{marginLeft: 5}}

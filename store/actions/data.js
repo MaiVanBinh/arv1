@@ -29,7 +29,7 @@ export const loadApp = () => {
 export const createAppSuccess = (updateApps) => {
   return {
     type: actionsType.CREATE_APP_CATE,
-    updateApps: updateApps
+    updateApps: updateApps,
   };
 };
 
@@ -57,9 +57,9 @@ export const deleteAppCate = (id) => {
 const updateAppCateSucess = (updateApps) => {
   return {
     type: actionsType.UPDATE_APP_CATE,
-    updateApps: updateApps
-  }
-}
+    updateApps: updateApps,
+  };
+};
 
 export const onChangeApp = (id, name, icon, mode) => {
   return (dispatch) => {
@@ -74,16 +74,24 @@ export const onChangeApp = (id, name, icon, mode) => {
             icon: icon,
           };
           AsyncStorage.setItem('applications', JSON.stringify(updateApps))
-          .then(() => dispatch(updateAppCateSucess(updateApps)))
-          .catch((err) => console.log(err));
-        } else if(mode === 'c') {
+            .then(() => dispatch(updateAppCateSucess(updateApps)))
+            .catch((err) => console.log(err));
+        } else if (mode === 'c') {
           updateApps.push({id: id, name: name, icon: icon});
           AsyncStorage.setItem('applications', JSON.stringify(updateApps))
-          .then(() => dispatch(createAppSuccess(updateApps)))
-          .catch((err) => console.log(err));
+            .then(() => dispatch(createAppSuccess(updateApps)))
+            .catch((err) => console.log(err));
         }
-        
       })
       .catch((err) => console.log(err));
+  };
+};
+
+export const dongboApps = (apps) => {
+  return (dispatch) => {
+    dispatch({
+      type: actionsType.DONG_BO_APPS,
+      apps: apps,
+    });
   };
 };
