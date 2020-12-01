@@ -7,6 +7,7 @@ import {
   StyleSheet,
   BackHandler,
 } from 'react-native';
+import Clipboard from '@react-native-community/clipboard';
 import Empty from '../components/UI/Empty';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AccItem from '../components/AccItem';
@@ -24,13 +25,14 @@ const ListAccount = (props) => {
   const [key, setKey] = useState('');
   const [dPass, setDPass] = useState(null);
   const [isDelete, setIsDelete] = useState(false);
+  const [hide, setHide] = useState(true);
 
   useEffect(() => {
     if (confirm > 0) {
       if (currentAccount) {
-        const pass= decrypt(currentAccount.password, key);
-        if(pass) {
-          if(isDelete) {
+        const pass = decrypt(currentAccount.password, key);
+        if (pass) {
+          if (isDelete) {
             props.onDeleteAccount(currentAccount.id);
             modalClose();
           } else {
@@ -83,11 +85,12 @@ const ListAccount = (props) => {
     key: {
       title: 'Key',
       value: '',
-      isPass: true
-    }
+      isPass: true,
+    },
   });
 
   const modalClose = () => {
+    setHide(true);
     setShowPass(false);
     setDPass(null);
     setModalVisible(false);
@@ -108,8 +111,8 @@ const ListAccount = (props) => {
       key: {
         title: 'Key',
         value: '',
-        isPass: true
-      }
+        isPass: true,
+      },
     });
   };
 
@@ -135,17 +138,21 @@ const ListAccount = (props) => {
 
   const onChangeAcc = async () => {
     console.log(formInput);
-    if(formInput.key.value === '' || formInput.username.value === '' || formInput.password.value === '') {
+    if (
+      formInput.key.value === '' ||
+      formInput.username.value === '' ||
+      formInput.password.value === ''
+    ) {
       alert('Inputs are reqiure');
       return;
     }
     try {
       const accs = JSON.parse(await asyncStorage.getItem('accounts'));
-      console.log(accs)
-      if(accs && accs.length > 0) {
+      console.log(accs);
+      if (accs && accs.length > 0) {
         const ex = accs[0];
         const isKeyCorrect = decrypt(ex.password, formInput.key.value);
-        if(!isKeyCorrect) {
+        if (!isKeyCorrect) {
           alert('Key not correct');
           return;
         }
@@ -174,7 +181,7 @@ const ListAccount = (props) => {
           app,
         );
       }
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
     setIdUpdate(null);
@@ -193,8 +200,8 @@ const ListAccount = (props) => {
       key: {
         title: 'Key',
         value: '',
-        isPass: true
-      }
+        isPass: true,
+      },
     });
   };
 
@@ -205,8 +212,8 @@ const ListAccount = (props) => {
   };
 
   const deleteAcc = async (id) => {
-    const acc = props.accounts.find(item => item.id === id);
-    if(acc) {
+    const acc = props.accounts.find((item) => item.id === id);
+    if (acc) {
       setCurrentAccount(acc);
     }
     setShowPass(true);
@@ -232,8 +239,8 @@ const ListAccount = (props) => {
       key: {
         title: 'Key',
         value: '',
-        isPass: true
-      }
+        isPass: true,
+      },
     });
   };
 
@@ -294,7 +301,35 @@ const ListAccount = (props) => {
         mode={showPass ? 'confirm' : null}
         confirmHandler={confirmHandler}>
         {inputContent}
-        {dPass ? <Text style={{fontSize: 15}}>Password: {dPass}</Text> : null}
+        {dPass ? (
+          <View
+            style={{
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexDirection: 'row',
+              marginTop: 10,
+            }}>
+            <Text style={{fontSize: 15}}>Password: {hide ? '*******' : dPass}</Text>
+            <View style={{flexDirection: 'row'}}>
+              <Icon
+              style={{marginRight: 10}}
+                name="eye"
+                size={15}
+                onPress={() => {
+                  setHide(prev => !prev);
+                }}
+              />
+              <Icon
+                name="copy"
+                size={15}
+                onPress={() => {
+                  Clipboard.setString(dPass);
+                  alert('Copied');
+                }}
+              />
+            </View>
+          </View>
+        ) : null}
       </ModalCustom>
       {props.accounts && props.accounts.length ? (
         <FlatList
@@ -336,6 +371,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 import {connect} from 'react-redux';
-import { acc } from 'react-native-reanimated';
+import {acc} from 'react-native-reanimated';
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListAccount);

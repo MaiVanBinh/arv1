@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.clipboard.ClipboardPackage;
 import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 import com.zoontek.rnpermissions.RNPermissionsPackage;
 import org.reactnative.camera.RNCameraPackage;

@@ -20,6 +20,8 @@ target 'AwesomeProject' do
 
   pod 'RNPermissions', :path => '../node_modules/react-native-permissions'
 
+  pod 'RNCClipboard', :path => '../node_modules/@react-native-community/clipboard'
+
   target 'AwesomeProjectTests' do
     inherit! :complete
     # Pods for testing
