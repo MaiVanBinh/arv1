@@ -32,6 +32,7 @@ const ListAccount = (props) => {
         if(pass) {
           if(isDelete) {
             props.onDeleteAccount(currentAccount.id);
+            modalClose();
           } else {
             setDPass(decrypt(currentAccount.password, key));
           }
@@ -204,6 +205,10 @@ const ListAccount = (props) => {
   };
 
   const deleteAcc = async (id) => {
+    const acc = props.accounts.find(item => item.id === id);
+    if(acc) {
+      setCurrentAccount(acc);
+    }
     setShowPass(true);
     setModalVisible(true);
     setIsDelete(true);

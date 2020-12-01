@@ -13,6 +13,7 @@ import QRCode from '../screens/QRCode';
 import Login from '../screens/Login';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
+
 const AppStackNavigator = createStackNavigator();
 
 const HomeStack = createStackNavigator();

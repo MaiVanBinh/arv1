@@ -17,6 +17,8 @@ import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import org.reactnative.maskedview.RNCMaskedViewPackage;
 // react-native-camera
 import org.reactnative.camera.RNCameraPackage;
+// react-native-charts-wrapper
+import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 // react-native-fingerprint-scanner
 import com.hieuvp.fingerprint.ReactNativeFingerprintScannerPackage;
 // react-native-gesture-handler
@@ -83,6 +85,7 @@ public class PackageList {
       new AsyncStoragePackage(),
       new RNCMaskedViewPackage(),
       new RNCameraPackage(),
+      new MPAndroidChartPackage(),
       new ReactNativeFingerprintScannerPackage(),
       new RNGestureHandlerPackage(),
       new RNPermissionsPackage(),

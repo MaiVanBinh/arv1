@@ -48,18 +48,27 @@ const QRCodeRender = (props) => {
     })
       .then(res => res.json())
       .then(async data => {
-        const dataUpdate = [...data.message.apps.map(item => ({
-          id: item.id,
-          name: item.name,
-          icon: item.icon
-        }))];
-        console.log(data.message.accs, 'accs')
-        console.log(Array.isArray(dataUpdate), 'dataUpdate');
-        console.log(Array.isArray(data.message.accs), 'accs');
-        // const dataUpdate = JSON.parse(data);
-        // console.log(data.message.message.apps);
-        await asyncStorage.setItem('applications', JSON.stringify(dataUpdate));
-        await asyncStorage.setItem('accounts', JSON.stringify(data.message.accs));
+        const currentApp = JSON.parse(await asyncStorage.getItem('applications'));
+        const currentAcc = JSON.parse(await asyncStorage.getItem('accounts'));
+        console.log(currentAcc,'currentAcc');
+        const getApp = data.message.apps;
+        const getAcc = data.message.accs;
+        let id =  currentApp && currentApp.length ? currentApp[currentApp.length - 1].id : 0;
+        if(getApp && getApp.length) {
+          for(let i = 0; i < getApp.length; i++) {
+            id += 1;
+            for(let j = 0; j < getAcc.length; j++) {
+              if(getApp[i].id == getAcc[j].app) {
+                getAcc[j].app = id
+              }
+            }
+            getApp[i].id = id;
+          }
+        }
+        console.log([...currentApp, ...getApp], "QR")
+        console.log([...currentAcc, ...getAcc], "QR")
+        await asyncStorage.setItem('applications', JSON.stringify([...currentApp, ...getApp]));
+        await asyncStorage.setItem('accounts', JSON.stringify([...currentAcc, ...getAcc]));
         refreshScreen();
         setIsTS(true);
       })
